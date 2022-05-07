@@ -3,6 +3,8 @@ const routes = require("./routes");
 const db = require("./database");
 const cors = require("cors");
 
+const trataErroValidacao = require("./middleware/trataErroValidacao");
+
 const api = express();
 
 db.hasConnection();
@@ -10,6 +12,7 @@ db.hasConnection();
 api.use(cors());
 api.use(express.json());
 api.use(routes);
+api.use(trataErroValidacao);
 
 // definicao de endereço e url
 
