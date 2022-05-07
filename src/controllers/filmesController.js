@@ -1,4 +1,4 @@
-const Filmes = require("../models/movies");
+const Filmes = require("../models/Movies");
 
 const filmesController = {
 	async listar(req, res) {
