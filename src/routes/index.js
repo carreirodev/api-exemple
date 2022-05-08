@@ -8,8 +8,9 @@ const loginValidator = require("../validators/loginValidator");
 const authController = require("../controllers/authController");
 
 const routes = express.Router();
+const autenticador = require("../middleware/autenticador");
 
-routes.get("/movies/:id", filmesController.buscarPeloId);
+routes.get("/movies/:id", autenticador, filmesController.buscarPeloId);
 
 routes.get("/movies", filmesController.listar);
 

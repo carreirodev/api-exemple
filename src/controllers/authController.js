@@ -1,5 +1,7 @@
 const Usuarios = require("../models/Usuarios");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secret = require("../config/secret");
 
 const authController = {
 	async login(req, res) {
@@ -20,7 +22,16 @@ const authController = {
 				}
 			}
 
-			return res.json("logado");
+			const token = jwt.sign(
+				{
+					id: userLogado.id,
+					nome: userLogado.nome,
+					email: userLogado.email
+				},
+				secret.chave
+			);
+
+			return res.json(token);
 		} catch (error) {
 			console.log("Login Incorreto");
 			console.error(error);
