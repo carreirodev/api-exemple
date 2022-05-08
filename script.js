@@ -2,17 +2,25 @@ const { application } = require("express");
 
 function recuperarFilme() {
 	const id = document.getElementById("idfilme").value;
+
 	console.log("id Recuperado = " + id);
-	fetch("http://localhost:4000/movies/" + id)
+	const token = localStorage.getItem("APIToken");
+	const header = {
+		headers: { Authorization: "Bearer " + token }
+	};
+
+	fetch("http://localhost:4000/movies/" + id, header)
 		.then((res) => trataResposta(res))
-		.catch((erro) => alert("filme nao encontrado"));
+		.catch((erro) => alert("Impossivel recuperar"));
 }
 
 function trataResposta(res) {
 	if (res.status == 200) {
 		res.json().then((movies) => preencheDados(movies));
+	} else if (res.status == 404) {
+		alert("nao achei o filme");
 	} else {
-		alert("Impossivel recuperar");
+		alert("Erro desconhecido");
 	}
 }
 
@@ -33,16 +41,16 @@ function login() {
 	};
 
 	const req = {
-		method: "Post",
+		method: "POST",
 		body: JSON.stringify(msgBody),
 		headers: {
-			"content-type": application / json
+			"content-type": "application/json"
 		}
 	};
 	fetch("http://localhost:4000/login", req)
 		.then((res) => res.json())
 		.then((token) => {
 			alert("estou logado");
-			localStorage.setItem("APITokent", token);
+			localStorage.setItem("APIToken", token);
 		});
 }
